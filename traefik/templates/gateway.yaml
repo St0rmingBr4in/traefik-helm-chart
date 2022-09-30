@@ -8,10 +8,13 @@ metadata:
   namespace: {{ default (include "traefik.namespace" .) .Values.experimental.kubernetesGateway.namespace }}
   labels:
     {{- include "traefik.labels" . | nindent 4 }}
-  {{- with .Values.experimental.kubernetesGateway.gateway.annotations }}
+    {{- with .Values.experimental.kubernetesGateway.gateway.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   annotations:
-  {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- with .Values.experimental.kubernetesGateway.gateway.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   gatewayClassName: traefik
   listeners:
