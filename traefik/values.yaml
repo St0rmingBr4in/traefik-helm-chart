@@ -129,6 +129,8 @@ experimental:
     ## Routes are restricted to namespace of the gateway by default.
     ## https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.FromNamespaces
     # namespacePolicy: All
+    gateway:
+      enabled: true
     # certificate:
     #   group: "core"
     #   kind: "Secret"
@@ -139,6 +141,8 @@ experimental:
     # Additional gateway annotations (e.g. for cert-manager.io/issuer)
     # annotations:
     #   cert-manager.io/issuer: letsencrypt
+    # Additional gateway labels
+    # labels:
 
 ## Create an IngressRoute for the dashboard
 ingressRoute:
