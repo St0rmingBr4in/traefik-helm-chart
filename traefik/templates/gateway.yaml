@@ -21,11 +21,17 @@ spec:
     - name: web
       port: {{ .Values.ports.web.port }}
       protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
 
     {{- if .Values.experimental.kubernetesGateway.certificate }}
     - name: websecure
       port: {{ $.Values.ports.websecure.port }}
       protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: All
       tls:
         certificateRefs:
           - name: {{ .Values.experimental.kubernetesGateway.certificate.name }}
