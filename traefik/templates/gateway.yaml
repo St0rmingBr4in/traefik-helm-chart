@@ -23,24 +23,31 @@ spec:
     - name: web
       port: {{ .Values.ports.web.port }}
       protocol: HTTP
-      {{- with .Values.experimental.kubernetesGateway.namespacePolicy }}
       allowedRoutes:
         namespaces:
-          from: {{ . }}
-      {{- end }}
-    {{- if .Values.experimental.kubernetesGateway.certificate }}
-    - name: websecure
-      port: {{ $.Values.ports.websecure.port }}
+          from: All
+    - name: websecure-st0rmingbr4in
+      port: 443
       protocol: HTTPS
-      {{- with .Values.experimental.kubernetesGateway.namespacePolicy }}
+      hostname: "*.st0rmingbr4in.com"
       allowedRoutes:
         namespaces:
-          from: {{ . }}
-      {{- end }}
+          from: All
       tls:
         certificateRefs:
-          - name: {{ .Values.experimental.kubernetesGateway.certificate.name }}
-            group: {{ .Values.experimental.kubernetesGateway.certificate.group }}
-            kind: {{ .Values.experimental.kubernetesGateway.certificate.kind }}
-    {{- end }}
+          - name: st0rmingbr4in.com-cert
+            group: core
+            kind: Secret
+    - name: websecure-aphorya
+      port: 443
+      protocol: HTTPS
+      hostname: "*.aphorya.fr"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - name: aphorya.fr-cert
+            group: core
+            kind: Secret
 {{- end }}
